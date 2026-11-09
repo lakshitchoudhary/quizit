@@ -1,0 +1,6 @@
+{
+  "name": "@napi-rs/canvas-win32-x64-msvc",
+  "version": "1.1.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/Brooooooklyn/canvas.git"
+}

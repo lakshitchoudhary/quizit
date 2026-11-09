@@ -1,0 +1,6 @@
+{
+  "name": "pdfjs-dist",
+  "version": "6.4.299",
+  "license": "Apache-2.0",
+  "repository": "git+https://github.com/mozilla/pdf.js.git"
+}

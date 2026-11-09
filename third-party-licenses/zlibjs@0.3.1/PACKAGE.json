@@ -1,0 +1,6 @@
+{
+  "name": "zlibjs",
+  "version": "0.3.1",
+  "license": "MIT",
+  "repository": "git://github.com/imaya/zlib.js.git"
+}

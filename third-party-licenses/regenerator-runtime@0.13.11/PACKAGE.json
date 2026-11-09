@@ -1,0 +1,6 @@
+{
+  "name": "regenerator-runtime",
+  "version": "0.13.11",
+  "license": "MIT",
+  "repository": "https://github.com/facebook/regenerator/tree/main/packages/runtime"
+}

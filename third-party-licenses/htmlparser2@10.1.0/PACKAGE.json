@@ -1,0 +1,6 @@
+{
+  "name": "htmlparser2",
+  "version": "10.1.0",
+  "license": "MIT",
+  "repository": "git://github.com/fb55/htmlparser2.git"
+}

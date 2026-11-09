@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Quizit!",
+  "version": "1.1.0",
+  "description": "Turn articles, Wikipedia, reading material and YouTube transcripts into notes, flashcards and quizzes with local AI or a manual ChatGPT workflow.",
+  "minimum_chrome_version": "122",
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://www.youtube.com/*",
+    "http://127.0.0.1:11434/*",
+    "file:///*"
+  ],
+  "action": {
+    "default_title": "Open Quizit!",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "panel.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; connect-src 'self' file: https: http:; worker-src 'self'"
+  },
+  "optional_host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "optional_permissions": [
+    "tabs"
+  ],
+  "short_name": "Quizit!",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  }
+}

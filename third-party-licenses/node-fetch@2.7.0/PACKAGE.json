@@ -1,0 +1,6 @@
+{
+  "name": "node-fetch",
+  "version": "2.7.0",
+  "license": "MIT",
+  "repository": "https://github.com/bitinn/node-fetch.git"
+}

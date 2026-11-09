@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Quizit!</title>
+    <link rel="stylesheet" href="panel.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="#"
+        ><img class="brand-logo" src="icons/logo.svg" alt="" /><span
+          >Quizit!<small>A little recall. A lasting idea.</small></span
+        ></a
+      >
+      <div class="header-actions">
+        <button
+          id="libraryButton"
+          class="icon"
+          aria-label="Open library"
+          title="Library"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 4h5v16H4zM11 4h4v16h-4zM17 5l3-1 4 15-3 1z" />
+          </svg></button
+        ><button
+          id="settingsButton"
+          class="icon"
+          aria-label="Settings"
+          title="Settings"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7h16M4 17h16" />
+            <circle cx="9" cy="7" r="3" />
+            <circle cx="15" cy="17" r="3" />
+          </svg>
+        </button>
+      </div>
+    </header>
+    <main>
+      <section id="libraryPanel" class="drawer" hidden>
+        <div class="section-head">
+          <h2>Your library</h2>
+          <button id="closeLibrary" class="text-button">Close</button>
+        </div>
+        <p class="hint">Saved material, ready when you are.</p>
+        <label for="savedSources" class="sr">Saved material</label
+        ><select id="savedSources"></select
+        ><button id="openSaved" class="secondary">Open saved material</button>
+        <details class="quiet-details">
+          <summary>Manage saved items</summary>
+          <button id="restoreItems" class="text-button">
+            Restore deleted items
+          </button>
+        </details>
+      </section>
+      <section id="settings" class="drawer" hidden>
+        <div class="section-head">
+          <h2>Preferences</h2>
+          <span class="version">1.1.0</span>
+        </div>
+        <label for="mode">AI mode</label
+        ><select id="mode">
+          <option value="local">Local AI · Ollama</option>
+          <option value="manual">Manual · copy to ChatGPT</option>
+        </select>
+        <div id="localSettings" hidden>
+          <label for="model">Local model</label
+          ><input id="model" value="qwen3.5:4b" spellcheck="false" /><button
+            id="test"
+            class="secondary"
+          >
+            Check connection
+          </button>
+          <p class="hint">
+            Ollama runs on your computer. The model is released after
+            generation.
+          </p>
+          <p class="hint" id="extensionId"></p>
+          <button id="copyId" class="secondary">
+            Copy Extension ID for setup
+          </button>
+        </div>
+        <details class="quiet-details">
+          <summary>Access & troubleshooting</summary>
+          <div id="pdfAccess">
+            <p class="hint">
+              For PDFs open in Edge, enable “Allow access to file URLs” in this
+              extension’s details once. The file picker also works.
+            </p>
+            <button id="enablePdf" class="secondary">
+              Enable automatic PDF connection
+            </button>
+            <p class="hint">
+              Requests permission to identify the active tab’s address.
+            </p>
+            <p id="pdfAddress" class="hint"></p>
+          </div>
+          <button id="reloadPanel" class="text-button">Reload sidebar</button>
+          <p class="hint">
+            Manual mode uses your own chat access. No paid API key is required.
+          </p>
+        </details>
+      </section>
+      <div class="workspace-bar">
+        <span class="eyebrow">YOUR STUDY SPACE</span
+        ><button id="reviewToday" class="review-shortcut">Review today</button>
+      </div>
+      <section class="source-card">
+        <div class="source-top">
+          <span id="sourceType" class="source-type">READ · WATCH · RECALL</span
+          ><span id="readyBadge" class="ready-badge">Add material</span>
+        </div>
+        <h1 id="videoTitle">Make it<br /><em>stay with you.</em></h1>
+        <p id="videoMeta">A video, an article, a chapter. Start anywhere.</p>
+        <div class="source-actions">
+          <button id="connect" class="secondary" disabled>
+            <span aria-hidden="true">↗</span> Connect current page</button
+          ><button id="addFile" class="secondary">＋ Add file</button
+          ><button id="newText" class="text-button">Paste text</button>
+        </div>
+      </section>
+      <div class="status-line">
+        <span class="status-dot" aria-hidden="true"></span>
+        <p id="status" role="status" aria-live="polite">
+          Getting your study space ready…
+        </p>
+      </div>
+      <div id="articleAccess" class="access-callout" hidden>
+        <p>Allow page access to read this website, or add a file instead.</p>
+        <button id="allowArticles" class="secondary">
+          Allow website access</button
+        ><button id="pdfHelp" class="text-button">PDF help</button>
+      </div>
+      <details id="source" class="source-details">
+        <summary>
+          <span>View or edit source</span
+          ><span id="sourceBadge" class="pill">Needed</span
+          ><span id="charCount" class="hint">0 characters</span>
+        </summary>
+        <label for="sourceTitle">Title</label
+        ><input id="sourceTitle" placeholder="Name this material" />
+        <div class="inline-actions">
+          <button id="readSelection" class="secondary" hidden>
+            Read selection</button
+          ><button id="read" class="secondary">Read again</button>
+        </div>
+        <label for="transcript" class="sr">Source text</label
+        ><textarea
+          id="transcript"
+          placeholder="Paste your text here…"
+          rows="6"
+        ></textarea>
+        <p class="hint">Check source text for completeness before creating.</p>
+      </details>
+      <details id="materialOptions" class="quiet-details material-options">
+        <summary>PDF pages & import options</summary>
+        <div class="options-inner">
+          <label for="pdfPages">PDF pages to study</label>
+          <div class="range-row">
+            <input
+              id="pdfPages"
+              placeholder="All pages, or 1-20, 35-40"
+              spellcheck="false"
+            /><button id="applyPdfPages" class="secondary" hidden>Apply</button>
+          </div>
+          <p class="hint">
+            PDF page positions, starting at 1. For a long book, choose a
+            chapter.
+          </p>
+          <label for="ocrMode">Text recognition</label
+          ><select id="ocrMode">
+            <option value="missing" selected>
+              Automatic · read scanned pages
+            </option>
+            <option value="none">Off · use existing text only</option>
+            <option value="all">OCR every page · mixed PDFs</option>
+          </select>
+          <p class="hint">
+            English OCR runs locally when needed. Check handwriting, formulas
+            and numbers.
+          </p>
+          <div class="inline-actions">
+            <button id="choosePdf" class="secondary">Choose PDF file</button>
+          </div>
+          <input id="pdfOCR" type="checkbox" hidden /><input
+            id="pdfFile"
+            type="file"
+            accept=".pdf,application/pdf"
+            hidden
+          /><input
+            id="textFile"
+            type="file"
+            accept=".pdf,.docx,.txt,.md,.png,.jpg,.jpeg,.webp"
+            hidden
+          />
+          <p class="hint">
+            PDF, DOCX, text and images · up to 25 MB. Selected text: up to
+            150,000 characters.
+          </p>
+        </div>
+      </details>
+      <details id="createPanel" class="create-panel" open>
+        <summary>
+          <span>Create something to remember</span
+          ><span class="summary-plus">＋</span>
+        </summary>
+        <div class="create-body">
+          <div class="form-row">
+            <div>
+              <label for="creationType">Create</label
+              ><select id="creationType">
+                <option value="all">Full study pack</option>
+                <option value="notes">Detailed notes only</option>
+                <option value="cards">Flashcards only</option>
+                <option value="quiz">Quiz only</option>
+                <option value="diagram">Mind map / flowchart</option>
+              </select>
+            </div>
+            <div>
+              <label for="difficulty">Level</label
+              ><select id="difficulty">
+                <option value="beginner">Beginner</option>
+                <option value="standard" selected>Standard</option>
+                <option value="advanced">Advanced</option>
+              </select>
+            </div>
+          </div>
+          <div id="diagramOptions" hidden>
+            <label for="diagramKind">Diagram type</label
+            ><select id="diagramKind">
+              <option value="mindmap">Mind map · connect ideas</option>
+              <option value="flowchart">Flowchart · steps & decisions</option>
+            </select>
+            <p class="hint">
+              Create separately when you need a visual overview. Existing notes,
+              cards and quiz are kept.
+            </p>
+          </div>
+          <div class="count-options">
+            <label id="quizCountLabel" for="quizCount"
+              >Quiz questions<input
+                id="quizCount"
+                type="number"
+                min="5"
+                max="100"
+                step="5"
+                value="5" /></label
+            ><label id="cardCountLabel" for="cardCount"
+              >Flashcards<input
+                id="cardCount"
+                type="number"
+                min="5"
+                max="100"
+                step="5"
+                value="5"
+            /></label>
+          </div>
+          <div id="localActions" hidden>
+            <button id="generate" class="primary">
+              Start creating <span aria-hidden="true">✦</span>
+            </button>
+            <details class="quiet-details regenerate">
+              <summary>Regenerate one section</summary>
+              <div class="review-row">
+                <button id="generateNotes" class="secondary">Notes</button
+                ><button id="generateCards" class="secondary">Cards</button
+                ><button id="generateQuiz" class="secondary">Quiz</button>
+              </div>
+            </details>
+          </div>
+          <div id="manualActions">
+            <button id="copy" class="primary">
+              Copy study prompt <span>↗</span>
+            </button>
+            <details id="importSection" class="quiet-details">
+              <summary>Import AI response</summary>
+              <label for="json" class="sr">AI JSON response</label
+              ><textarea
+                id="json"
+                rows="5"
+                placeholder="Paste the JSON study pack…"
+              ></textarea
+              ><button id="import" class="secondary">Import study pack</button>
+            </details>
+          </div>
+          <p class="create-note">
+            You choose when to start. Finished sections are saved.
+          </p>
+        </div>
+      </details>
+      <button id="cancel" class="secondary cancel-task" hidden>
+        Cancel task
+      </button>
+      <nav id="studyNav" aria-label="Study sections">
+        <button data-view="summary" class="selected" aria-pressed="true">
+          Notes</button
+        ><button data-view="cards" aria-pressed="false">Flashcards</button
+        ><button data-view="quiz" aria-pressed="false">Quiz</button>
+        <button data-view="diagram" aria-pressed="false">Map</button>
+      </nav>
+      <section id="study">
+        <div class="empty">
+          <span class="empty-orbit" aria-hidden="true">✦</span>
+          <h2>Less rereading.<br />More remembering.</h2>
+          <p>Your notes, cards and quiz will appear here.</p>
+        </div>
+      </section>
+      <div id="packActions" class="between" hidden>
+        <button id="export" class="text-button">Export study pack</button
+        ><button id="clear" class="text-button danger">
+          Clear this session
+        </button>
+      </div>
+      <footer>
+        <span class="privacy-dot"></span
+        ><button id="engineStatus" class="text-button">
+          Local AI · checking…</button
+        ><span>Saved on this device</span>
+      </footer>
+    </main>
+    <script src="bootstrap.js"></script>
+  </body>
+</html>

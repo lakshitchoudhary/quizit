@@ -1,0 +1,5 @@
+pdfjs-dist 6.4.299
+mammoth 1.13.0
+tesseract.js and tesseract.js-core 7.0.0
+@tesseract.js-data/eng 1.0.0 (4.0.0_best_int)
+Locally bundled; explicit local worker/core/language paths. No model weights for Ollama are included.

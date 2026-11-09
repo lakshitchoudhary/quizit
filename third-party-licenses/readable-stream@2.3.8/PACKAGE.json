@@ -1,0 +1,6 @@
+{
+  "name": "readable-stream",
+  "version": "2.3.8",
+  "license": "MIT",
+  "repository": "git://github.com/nodejs/readable-stream"
+}

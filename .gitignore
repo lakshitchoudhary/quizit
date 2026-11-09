@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.cache/
+*.log
+.env
+.env.*
+!.env.example
+*.gguf
+*.safetensors
+*.traineddata
+*.pdf
+*.docx
+*.zip
+coverage/
+.DS_Store
+Thumbs.db

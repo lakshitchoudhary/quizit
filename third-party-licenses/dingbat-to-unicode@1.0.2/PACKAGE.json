@@ -1,0 +1,6 @@
+{
+  "name": "dingbat-to-unicode",
+  "version": "1.0.2",
+  "license": "BSD-2-Clause",
+  "repository": "git+https://github.com/mwilliamson/dingbat-to-unicode.git"
+}
